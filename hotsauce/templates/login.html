@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+      addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link href="{{ url_for('static', filename='forms.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link
+      href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+    />
+
+  </head>
+  <body>
+
+
+    {% block content %}
+    
+    <div class="main-w3layouts wrapper">
+        <div class="contianer text-center mx-auto" style="width: 50%;">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+
+                {% for category, message in messages %}
+
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+
+              {% endif %}
+            {% endwith %}
+        </div>
+      <div class="main-agileinfo">
+
+        <div class="agileits-top" style="margin-top:100px">
+
+            <div class="user-dashboard">
+                
+       
+          <form action="#" method="post">
+
+            {{ form.hidden_tag() }}
+
+            {{ form.email(class="text email",placeholder="Email") }}
+            {{ form.password(class="text",placeholder="Password") }}
+            <div class="check" style="margin-top: 12px;color: white;">
+                {{ form.remember(class="checkbox") }}
+                <span>Remember Me</span>
+            </div>
+
+            <div class="wthree-text">
+              <!-- <label class="anim">
+                <input type="checkbox" class="checkbox" required="" />
+                
+              </label>-->
+              <div class="clear"></div>
+            </div>
+            <input type="submit" value="Login"  />
+          </form>
+          <p>Don't have an Account? <a href="{{ url_for('register') }}"> SIGNUP!</a></p>
+          <p style="padding-top: 20px;"> <a href="{{ url_for('reset_request') }}" "> Forget Password?</a></p>
+        </div>
+      </div>
+
+      {% endblock  %}
+
+
+      <!-- //copyright -->
+      <ul class="bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <!-- //main -->
+  </body>
+</html>

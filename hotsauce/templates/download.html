@@ -1,0 +1,79 @@
+{% extends "home.html" %}
+
+{% block content1 %}
+<ul>
+    <li ><a href="{{ url_for('home') }}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+    <li><a href="{{ url_for('scrape') }}"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Scrape</span></a></li>
+    <li><a href="{{ url_for('search') }}"><i class="fa fa-search" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Search</span></a></li>
+    <li class="active"><a href="{{ url_for('download') }}"><i class="fa fa-download " aria-hidden="true"></i><span class="hidden-xs hidden-sm">Download CSV</span></a></li>
+    {% if current_user.is_authenticated %}
+    <li><a href="{{url_for('account')}}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">MyAccount</span></a></li>
+    <li><a href="{{url_for('logout')}}"><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Logout</span></a></li>
+    {% endif %}
+
+</ul>
+{% endblock content1 %}
+
+
+{% block content %}
+
+
+<div class="row">
+
+    {% if prods_len == 0 %}
+        
+    <div class="d-flex flex-column text-center">
+        <center><p class="container " style="font-size:25px;margin-top: 15%;">There are no products in the databas. Please run the scrapper first</p></center>
+        <a class="btn scrape " id="scrape" href="{{ url_for('scrape') }}">Scrape</a>
+    </div>
+
+    {% else %}
+
+    <div id="mt-5 pt-5 container  text-center " style="margin: 20px 40% ;">
+        <a download class="btn asd-download " href="{{url_for('getCSV')}}" > Download CSV</a>
+    </div>
+
+
+    <div class="well  " style="padding-top: 20px !important;">
+
+        <table class="table text-center" >
+
+           
+
+          <tbody class="">
+            <tr class="thead">
+                
+                <td>ID</td>
+                <td>Item Title</td>
+                <td>InStock</td>
+              </tr>
+              {% for product in pages.items %}
+                  <tr>
+                    <td>{{product.id}}</td>
+                    <td>{{product.title}}</td>
+                    <td>{{product.inStock}}</td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+    </div>
+                <div class="row container">
+                    <div class="center-block text-center">
+                        <ul class="pagination">
+                          <li class="{% if not pages.has_prev %} disabled {% endif %}"><a class="arrow_page" href="./download?page={{pages.prev_num}}">« Previous</a></li>
+                          {% for page in pages.iter_pages() %}
+                                {% if page %}
+                                    <li class=" {% if page==pages.page %}active_page {% endif %}"><a class="page_num" href="./download?page={{page}}">{{page}}</a></li>
+                                {% else %} 
+                                    <li ><a class="dots" href="#">.....</a></li>
+                                {% endif %}
+                                
+                          {% endfor %}
+                          <li class=" {% if not pages.has_next %} disabled {% endif %}"><a class="arrow_page" href="./download?page={{pages.next_num}}">Next »</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+    </div>
+{% endif %}
+{% endblock content %}

@@ -1,0 +1,54 @@
+
+
+
+{% extends "home.html" %}
+
+{% block content1 %}
+<ul>
+    <li ><a href="{{ url_for('home') }}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+    <li class="active"><a href="{{ url_for('scrapePage') }}"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Scrape</span></a></li>
+    <li ><a href="{{ url_for('search') }}"><i class="fa fa-search" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Search</span></a></li>
+    <li ><a href="{{ url_for('download') }}"><i class="fa fa-download " aria-hidden="true"></i><span class="hidden-xs hidden-sm">Download CSV</span></a></li>
+    {% if current_user.is_authenticated %}
+    <li><a href="{{url_for('account')}}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">MyAccount</span></a></li>
+    <li><a href="{{url_for('logout')}}"><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Logout</span></a></li>
+    {% endif %}
+</ul>
+{% endblock content1 %}
+
+
+{% block content %}
+
+{% if firstTime %}
+    <div class="row container-fluid text-center mx-auto " style="margin-top:25%;">
+        <div class="btn  asd "><a class="btn asd" href="{{url_for('scrape')}}">Scrape</a></div>
+    </div>
+{% else %}
+    {% if downloadStatus %}
+        <div class="row container-fluid text-center mx-auto " style="margin-top:25%;">
+            <div class="btn  asd ">Rescrape</div>
+            <div class="btn btn-download asd-download">Download CSV</div>
+        </div>
+        <center><progress id="" class="text-center mx-auto mt-5 pt-5" value="100" max="100" style="padding: 4% 40%;accent-color: rgb(15, 191, 15);"> 100% </progress></center>
+    {% else %}
+        <div class="container mx-auto">
+            <p class="mx-auto text-center" style="padding-top: 20%;font-size:20px;font-weight: bold;">Please wait for 2:3 minutes and then reload the page to check if scrapping is done!!</p>
+        </div>
+    {% endif %}
+    
+{% endif %}
+    
+<script>
+
+    var progress_bar = document.getElementById('prog');
+
+    if(progress_bar){
+        progress_bar.style.width ++;
+    }
+ 
+
+</script>
+{% endblock content %}
+
+
+

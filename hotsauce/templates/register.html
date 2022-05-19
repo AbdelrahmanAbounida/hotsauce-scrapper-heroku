@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Register Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script type="application/x-javascript">
+      addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+    </script>
+    <link href="{{ url_for('static', filename='forms.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link
+      href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i"
+      rel="stylesheet"
+    />
+
+  </head>
+  <body>
+    <div class="main-w3layouts wrapper">
+      <h1 style="font-size: 30PX;font-family:  'Lucida Sans', Arial, Arial, Helvetica, sans-serif, Tahoma, Geneva, Verdana, sans-serif;">REGISTER NOW!</h1>
+      <div class="main-agileinfo">
+        <div class="agileits-top">
+          {% block content %}
+
+
+          <form action="" method="POST">
+            
+            {{ form.hidden_tag() }}
+
+            <!--===================================================================-->
+            {% if form.username.errors %}
+                  {% for error in form.username.errors %}
+                      <span class="error">{{ error }}</span>
+                  {% endfor %}
+              {{ form.username(class="text invalid",placeholder="Username") }}
+
+                  
+
+            {% else %}
+                {{ form.username(class="text",placeholder="Username") }}
+            {% endif %}
+            
+            <!--===================================================================-->
+            <!--===================================================================-->
+            {% if form.email.errors %}
+                {% for error in form.email.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            {{ form.email(class="text invalid",placeholder="Email") }}
+            {% else %}
+            {{ form.email(class="text",placeholder="Email") }}
+            {% endif %}
+            <!--===================================================================-->
+             <!--===================================================================-->
+             {% if form.password.errors %}
+             {{ form.password(class="text invalid",placeholder="Password") }}
+             <div class="invalid-feedback">
+               {% for error in form.password.errors %}
+                   <span>{{ error }}</span>
+               {% endfor %}
+             </div>
+           {% else %}
+             {{ form.password(class="text",placeholder="Password") }}
+           {% endif %}
+           <!--===================================================================-->
+            <!--===================================================================-->
+            {% if form.confirm_password.errors %}
+            {{ form.confirm_password(class="text invalid",placeholder="Confirm Password") }}
+              <div class="invalid-feedback">
+                {% for error in form.confirm_password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+            {{ form.confirm_password(class="text",placeholder="Confirm Password") }}
+            {% endif %}
+            <!--===================================================================-->
+            
+            
+            
+            
+            
+            
+            <!--
+              <input
+              class="text"
+              type="text"
+              name="Username"
+              placeholder="Username"
+              required=""
+            />
+            <input
+              class="text email"
+              type="email"
+              name="email"
+              placeholder="Email"
+              required=""
+            />
+            <input
+              class="text"
+              type="password"
+              name="password"
+              placeholder="Password"
+              required=""
+            />
+            <input
+              class="text w3lpass"
+              type="password"
+              name="password"
+              placeholder="Confirm Password"
+              required=""
+            />
+            <input type="submit" value="SIGNUP" />
+            -->
+
+
+              <!--
+              <div class="wthree-text">
+               <label class="anim">
+                <input type="checkbox" class="checkbox" required="" />
+                <span>Remember Me</span>
+              </label>
+              <div class="clear"></div>
+            </div>
+            -->
+            {{ form.submit(class="text w3lpass") }}
+            
+          </form>
+
+          {% endblock content %}
+          <p>Already have an Account? <a href="{{ url_for('login') }}"> Login Now!</a></p>
+          
+        </div>
+      </div>
+
+      <div class="colorlibcopy-agile">
+        <p>
+          © 2022 Abounida. All rights reserved.
+          <a href="https://abdoneda98.github.io/portfolio/" target="_blank">Abounida</a>
+        </p>
+      </div>
+      <!-- //copyright -->
+      <ul class="bubbles">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </div>
+    <!-- //main -->
+  </body>
+</html>

@@ -1,0 +1,89 @@
+{% extends "home.html" %}
+
+{% block content1 %}
+<ul>
+    <li ><a href="{{ url_for('home') }}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+    <li><a href="{{ url_for('scrape') }}"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Scrape</span></a></li>
+    <li class="active"><a href="{{ url_for('search') }}"><i class="fa fa-search" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Search</span></a></li>
+    <li ><a href="{{ url_for('download') }}"><i class="fa fa-download " aria-hidden="true"></i><span class="hidden-xs hidden-sm">Download CSV</span></a></li>
+    {% if current_user.is_authenticated %}
+    <li><a href="{{url_for('account')}}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">MyAccount</span></a></li>
+    <li><a href="{{url_for('logout')}}"><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Logout</span></a></li>
+    {% endif %}
+</ul>
+{% endblock content1 %}
+
+
+{% block content %}
+    <div >
+    <center><h1>Search</h1></center>
+
+    
+    <!--<center><progress class="text-center mx-auto"" value="62" max="100" style="padding: 4% 40%;accent-color: rgb(15, 191, 15);"> 32% </progress></center> -->
+    <form name="text" class="navbar-form container-fluid mx-auto text-center d-flex" method="POST" action={{ url_for('search') }} role="search" style="padding-top: 5%;">
+        <div class="form-group" style="width: 60%;">
+            <input type="text" name="q" class="form-control " id="srch-txt" placeholder="Search" style="width: 100%;" value="{{srchtext}}">
+        </div>
+        <button type="submit" class="btn srch-btn"><i class="glyphicon glyphicon-search"></i></button>
+    </form>
+
+
+<div class="row">
+
+
+    <div class="well  " style="padding-top: 20px !important;">
+
+        <table class="table text-center" >
+          <tbody class="">
+            <tr class="thead">   
+                <td>ID</td>
+                <td>Item Title</td>
+                <td>InStock</td>
+            </tr>
+            <div id =""></div>
+              {% for product in products %}
+                  <tr>
+                    <td>{{product.id}}</td>
+                    <td>{{product.title}}</td>
+                    <td>{{product.inStock}}</td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+    </div>
+
+    </div>
+
+
+
+
+
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>-->
+    <script>
+
+        /*
+        $(document).ready(function(){
+
+            function load_data(query){
+                $.ajax({
+                    url:"/search",
+                    method:"POST",
+                    data:{query:query},
+                    success:function(data){
+                        $('#result').html(data);
+                       
+                    }
+                });
+            }   
+            $('#srch-txt').keyup(function(){
+                var search = $(this).val();
+                console.log(search)
+                if(search != ''){
+                    load_data(search);
+                }
+            });
+        });
+        */
+    </script>
+</div>
+{% endblock content %}

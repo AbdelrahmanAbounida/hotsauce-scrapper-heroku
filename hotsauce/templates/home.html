@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HotSauce Scrapper</title>
+
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='dash.css') }}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,500;1,300&display=swap" rel="stylesheet">
+</head>
+
+<body class="home" style="height: 100%;" id="result">
+    <div class="container-fluid display-table" style="height: 100%;">
+        <div class="row display-table-row" style="height: 100%;">
+            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                <div class="logo">
+                    <a hef="home.html"><img src="https://hotshots.inc/skins/Skin_2/images/HotShotsLogo.png" alt="merkery_logo" class="hidden-xs hidden-sm">
+                    </a>
+                </div>
+                <div class="navi">
+                    {% block content1 %}
+                    <ul>
+                        <li class="active"><a href="{{ url_for('home') }}"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Home</span></a></li>
+                        <li><a href="{{ url_for('scrape') }}"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Scrape</span></a></li>
+                        <li><a href="{{ url_for('search') }}"><i class="fa fa-search" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Search</span></a></li>
+                        <li><a href="{{ url_for('download') }}"><i class="fa fa-download " aria-hidden="true"></i><span class="hidden-xs hidden-sm">Download CSV</span></a></li>
+                        {% if current_user.is_authenticated %}
+                        <li><a href="{{url_for('account')}}"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">MyAccount</span></a></li>
+                        <li><a href="{{url_for('logout')}}"><i class="glyphicon glyphicon-log-out" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Logout</span></a></li>
+                        {% endif %}
+
+                    </ul>
+                    {% endblock content1 %}
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+                <!--<button type="button" class="slide-toggle">Slide Toggle</button> -->
+                <div class="row">
+                    <header>
+                        <div class="col-md-7">
+                            <nav class="navbar-default pull-left">
+                                <div class="navbar-header">
+                                    <button type="button" class="navbar-toggle collapsed" data-toggle="offcanvas" data-target="#side-menu" aria-expanded="false">
+                                        <span class="sr-only">Toggle navigation</span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span>
+                                    </button>
+                                </div>
+                            </nav>
+                            <div class="search hidden-xs hidden-sm">
+ 
+
+                                  <form class="navbar-form navbar-left" method="GET" role="search">
+                                    <div class="form-group">
+                                        <input type="text" name="q" class="form-control srch" placeholder="Search">
+                                    </div>
+                                    <button type="submit" class="btn srch-btn"><i class="glyphicon glyphicon-search"></i></button>
+                                </form>
+
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="header-rightside">
+                                <ul class="list-inline header-top pull-right row" style="padding-top: 13px;">
+                                    {% if not current_user.is_authenticated %}
+                                        <li class="hidden-xs"><a href="{{url_for('login')}}" class="add-project " data-target="#add_project">Login</a></li>
+                                        <li class="hidden-xs "><a href="{{url_for('register')}}" class="asd" data-target="#add_project">Register</a></li>
+
+                                    {% else %}
+                                    <li class="hidden-xs"><a href="{{url_for('logout')}}" class="add-project " data-target="#add_project">Logout</a></li>
+
+                                        <li class="hidden-xs">
+                                            <li class="hidden-xs "><a href="{{url_for('account')}}" class="asd" data-target="#add_project">MyAccount</a></li>
+                                        </li>
+                                    {% endif %}
+
+                                    
+                                    
+<!--<div class="btn-group">
+                                                    <button class="btn btn-secondary text-danger btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="font-size: 19px;border-radius: 15px !important;color: black;margin-bottom: 7px;">
+                                                  My Account <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                  <li>1</li>
+                                                </ul>
+                                                </div>
+-->
+                                              
+                            </div>
+                        </div>
+                    </header>
+                </div>
+
+                {% block content %}
+                {% if current_user.is_authenticated %}
+                    <h1>Hello, {{current_user.username}}</h1>
+                {% endif %}
+                <div class="user-dashboard">
+                    
+
+                    <!--======================== Information ============================-->
+                    <div class="row top_tiles" style="padding-top:55px;">
+                            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="tile-stats">
+                                <div class="icon"><i class="fa fa fa-database"> </i></div>
+                                    {% if current_user.is_authenticated %}
+                                        <div class="count">179</div>
+                                    {% else %}
+                                        <div class="count">0</div>
+                                    {% endif %}
+                                <h3>Total</h3>
+                                <p>Total number of products on the website</p>
+                            </div>
+                            </div>
+
+                            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="tile-stats">
+                                <div class="icon"><i class="fa fa-sort-amount-desc"></i></div>
+                                {% if current_user.is_authenticated %}
+                                <div class="count">179</div>
+                                {% else %}
+                                    <div class="count">0</div>
+                                {% endif %}
+                                <h3>OutStock</h3>
+                                <p>Total number of outstock products</p>
+                            </div>
+                            </div>
+                            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                            <div class="tile-stats">
+                                <div class="icon"><i class="fa fa-check-square-o"></i></div>
+                                {% if current_user.is_authenticated %}
+                                <div class="count">179</div>
+                                {% else %}
+                                    <div class="count">0</div>
+                                {% endif %}
+                                <h3>InStock</h3>
+                                <p>Total number of instock products</p>
+                            </div>
+                            </div>
+
+                            <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                                <div class="tile-stats">
+                                    <div class="icon-img"><img class="" src="{{ url_for('static', filename='assets/ketchup-bottle.png') }}"/> </div>
+                                    {% if current_user.is_authenticated %}
+                                    <div class="count">179</div>
+                                    {% else %}
+                                        <div class="count">0</div>
+                                    {% endif %}
+                                    <h3>New Items</h3>
+                                    <p>Total number of new items</p>
+                                </div>
+                                </div>
+                      </div>
+
+
+                    <div class="container mx-auto text-center mt-5">
+                            <a class="btn scrape" id="scrape" href="{{ url_for('scrape') }}">Scrape</a>
+                            
+                    </div>
+
+                    <div id="place_for_suggestions"></div>
+
+                {% endblock content %}
+                
+                </div>
+            </div>
+        </div>
+
+        
+
+    </div>
+
+
+
+    
+
+</body>
+
+
+</html>
